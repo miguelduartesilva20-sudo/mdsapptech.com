@@ -1,0 +1,126 @@
+---
+import { siteConfig } from "@/config/site";
+import LegalLayout from "@/layouts/LegalLayout.astro";
+---
+
+<LegalLayout
+  title={`Terms of Service — ${siteConfig.name}`}
+  description={`Terms of Service for the ${siteConfig.name} website.`}
+  heading="Terms of Service"
+  lastUpdated={siteConfig.legal.termsLastUpdated}
+  currentPath="/terms/"
+>
+  <p slot="scope" class="legal-scope">
+    These terms cover this website (<code>{siteConfig.url}</code>) only. Use of any application
+    we publish is governed by that app's own terms and by the store you installed it from.
+  </p>
+
+  <section>
+    <h2>1. Acceptance of terms</h2>
+    <p>
+      By using this website you agree to these Terms of Service. If you do not agree with any
+      part of them, please do not use the site.
+    </p>
+  </section>
+
+  <section>
+    <h2>2. Scope</h2>
+    <p>
+      These terms govern the website only. They do <strong>not</strong> govern the applications
+      published by {siteConfig.name} — those are covered by their store licence agreement
+      (for example the Google Play Terms of Service) and by any terms shipped with the app itself.
+      Each app's privacy policy is linked from the <a href="/privacy/">privacy page</a>.
+    </p>
+  </section>
+
+  <section>
+    <h2>3. Use of this website</h2>
+    <p>You may use this website for lawful purposes only. You agree not to:</p>
+    <ul>
+      <li>violate any applicable law or regulation;</li>
+      <li>attempt to gain unauthorised access to any system or network;</li>
+      <li>interfere with or disrupt the operation of the site;</li>
+      <li>transmit viruses, malware or other harmful code.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>4. Intellectual property</h2>
+    <p>
+      The text, graphics, logos, icons and code on this website belong to {siteConfig.name} or
+      its licensors and are protected by copyright and trade mark law. App names, icons and
+      screenshots shown here are ours; store badges and third-party marks belong to their
+      respective owners.
+    </p>
+    <p>
+      You may not reproduce, distribute, modify or commercially exploit content from this site
+      without prior written permission.
+    </p>
+  </section>
+
+  <section>
+    <h2>5. Links to third-party sites</h2>
+    <p>
+      This site links to app store listings and other external pages for convenience.
+      {siteConfig.name} does not control those sites and takes no responsibility for their
+      content, policies or practices. Following them is at your own risk and subject to their
+      own terms.
+    </p>
+  </section>
+
+  <section>
+    <h2>6. Disclaimer of warranties</h2>
+    <p>
+      This website is provided "as is" and "as available", without warranties of any kind,
+      express or implied. We do not warrant that the site will be uninterrupted, secure or
+      error-free, or that the information on it is complete or current.
+    </p>
+  </section>
+
+  <section>
+    <h2>7. Limitation of liability</h2>
+    <p>
+      To the maximum extent permitted by law, {siteConfig.name} is not liable for any indirect,
+      incidental, special or consequential damages, or any loss of profits, revenue or data,
+      arising from your use of — or inability to use — this website. Nothing in these terms
+      excludes liability that cannot lawfully be excluded.
+    </p>
+  </section>
+
+  <section>
+    <h2>8. Changes to these terms</h2>
+    <p>
+      We may revise these terms at any time. The <strong>Last updated</strong> date at the top of
+      this page reflects the most recent revision, and continued use of the site after a change
+      means you accept it.
+    </p>
+  </section>
+
+  <section>
+    <h2>9. Governing law</h2>
+    <p>
+      These terms are governed by the laws of <strong>Portugal</strong>, without regard to
+      conflict-of-law rules. Nothing here removes any mandatory consumer protection you have
+      under the law of your country of residence.
+    </p>
+  </section>
+
+  <section>
+    <h2>10. Contact</h2>
+    <p>Questions about these terms:</p>
+    <address>
+      <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+    </address>
+    <p class="contact-after">
+      {siteConfig.name} — <a href={siteConfig.url}>mdsapptech.com</a>
+    </p>
+  </section>
+</LegalLayout>
+
+<style>
+  .contact-after {
+    margin-top: var(--spacing-6);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+</style>

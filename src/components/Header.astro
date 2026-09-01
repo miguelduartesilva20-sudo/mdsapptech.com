@@ -1,0 +1,262 @@
+---
+import { siteConfig } from "@/config/site";
+import Button from "./Button.astro";
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = "/" } = Astro.props;
+const isHome = currentPath === "/";
+/** Section anchors have to be absolute so they also work from a legal page. */
+const anchor = (id: string) => (isHome ? `#${id}` : `/#${id}`);
+---
+
+<header class="header" role="banner">
+  <nav class="nav container" aria-label="Main navigation">
+    <a href="/" class="logo" aria-label={`${siteConfig.name} - Home`}>
+      <span class="logo-mark" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100" height="100" rx="25" class="gradient-bg"/>
+          <polygon points="18,78 18,22 32,22 50,50 68,22 82,22 82,78 69,78 69,45 55,66 45,66 31,45 31,78" fill="white"/>
+        </svg>
+      </span>
+      <span class="logo-text">{siteConfig.name}</span>
+    </a>
+
+    <div class="nav-links" id="nav-links">
+      <a href={anchor("apps")} class="nav-link">Apps</a>
+      <a href={anchor("about")} class="nav-link">About</a>
+      <a href={anchor("contact")} class="nav-link">Contact</a>
+      <a href="/privacy/" class={currentPath.startsWith("/privacy") ? "nav-link legal-link active" : "nav-link legal-link"}>Privacy</a>
+      <a href="/terms/" class={currentPath.startsWith("/terms") ? "nav-link legal-link active" : "nav-link legal-link"}>Terms</a>
+    </div>
+
+    <div class="nav-actions">
+      <a href={anchor("apps")} class="nav-cta">
+        <Button variant="primary" size="sm">Our Apps</Button>
+      </a>
+      <button class="mobile-menu-btn" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation menu">
+        <svg class="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <svg class="close-icon hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(var(--color-bg-primary), 0.9);
+    backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--color-border);
+    height: var(--header-height);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    gap: var(--spacing-8);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-xl);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .logo-mark {
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .logo-text {
+      display: block;
+    }
+  }
+
+  .nav-links {
+    display: none;
+    align-items: center;
+    gap: var(--spacing-6);
+    flex: 1;
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    .nav-links {
+      display: flex;
+    }
+  }
+
+  .nav-link {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast);
+    padding: var(--spacing-2) 0;
+    position: relative;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--color-text-primary);
+  }
+
+  .nav-link.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(135deg, var(--color-accent-start), var(--color-accent-end));
+    border-radius: var(--radius-full);
+  }
+
+  .legal-link {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+  }
+
+  .legal-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    flex-shrink: 0;
+  }
+
+  .nav-cta {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .nav-cta {
+      display: block;
+    }
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-lg);
+    color: var(--color-text-secondary);
+    transition: all var(--transition-fast);
+  }
+
+  .mobile-menu-btn:hover {
+    background: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+  }
+
+  @media (min-width: 768px) {
+    .mobile-menu-btn {
+      display: none;
+    }
+  }
+
+  .menu-icon,
+  .close-icon {
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .mobile-menu-btn[aria-expanded="true"] .menu-icon {
+    display: none;
+  }
+
+  .mobile-menu-btn[aria-expanded="true"] .close-icon {
+    display: block;
+  }
+
+  @media (max-width: 767px) {
+    .nav-links {
+      position: absolute;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      background: var(--color-bg-primary);
+      border-bottom: 1px solid var(--color-border);
+      flex-direction: column;
+      padding: var(--spacing-6) var(--container-padding);
+      gap: var(--spacing-4);
+      box-shadow: var(--shadow-lg);
+      display: none;
+    }
+
+    .nav-links.open {
+      display: flex;
+    }
+
+    .nav-link {
+      width: 100%;
+      text-align: center;
+      padding: var(--spacing-3) var(--spacing-4);
+      border-radius: var(--radius-lg);
+    }
+
+    .nav-link:hover {
+      background: var(--color-bg-tertiary);
+    }
+
+    .legal-link {
+      padding-top: var(--spacing-4);
+      border-top: 1px solid var(--color-border);
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<script is:inline>
+  const menuBtn = document.querySelector('.mobile-menu-btn');
+  const navLinks = document.querySelector('.nav-links');
+
+  if (menuBtn && navLinks) {
+    menuBtn.addEventListener('click', () => {
+      const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', (!isExpanded).toString());
+      navLinks.classList.toggle('open');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuBtn.setAttribute('aria-expanded', 'false');
+        navLinks.classList.remove('open');
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!menuBtn.contains(e.target) && !navLinks.contains(e.target)) {
+        menuBtn.setAttribute('aria-expanded', 'false');
+        navLinks.classList.remove('open');
+      }
+    });
+  }
+</script>

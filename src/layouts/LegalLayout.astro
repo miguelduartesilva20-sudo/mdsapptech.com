@@ -1,0 +1,36 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Section from "@/components/Section.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  heading: string;
+  lastUpdated: string;
+  currentPath?: string;
+}
+
+const { title, description, heading, lastUpdated, currentPath } = Astro.props;
+
+const formattedDate = new Date(lastUpdated).toLocaleDateString("en-GB", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout title={title} description={description} currentPath={currentPath}>
+  <Section class="legal-hero" ariaLabel={heading}>
+    <header class="legal-header">
+      <h1>{heading}</h1>
+      <p class="legal-meta">Last updated: {formattedDate}</p>
+      <slot name="scope" />
+    </header>
+  </Section>
+
+  <Section ariaLabel={`${heading} content`}>
+    <article class="legal-content">
+      <slot />
+    </article>
+  </Section>
+</BaseLayout>

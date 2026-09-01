@@ -1,0 +1,195 @@
+---
+import { siteConfig } from "@/config/site";
+import { getAllApps } from "@/data/apps";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Hero, Section, AppCard } from "@/components";
+
+const apps = getAllApps();
+---
+
+<BaseLayout title={siteConfig.title} description={siteConfig.description} currentPath="/">
+  <Hero />
+
+  <Section id="apps" ariaLabel="Our applications">
+    <header class="section-header">
+      <h2 class="section-title">Our Apps</h2>
+      <p class="section-description">
+        Every app we publish is listed here, together with its own privacy policy —
+        the one you will find linked from its Google Play or App Store listing.
+      </p>
+    </header>
+
+    <div class="apps-grid" role="list">
+      {apps.map((app) => (
+        <AppCard app={app} />
+      ))}
+    </div>
+
+    <p class="apps-note">
+      More applications are on the way. Each new app is added here with its own policy page.
+    </p>
+  </Section>
+
+  <Section id="about" ariaLabel="About us" class="bg-secondary">
+    <header class="section-header">
+      <h2 class="section-title">About Us</h2>
+    </header>
+
+    <div class="about-content">
+      <p>
+        MDS AppTech is a very small but dedicated team of app creators. We build mobile
+        applications and simple web pages for many different purposes — from media players
+        and everyday utilities to landing pages and small business sites.
+      </p>
+      <p>
+        Being small is deliberate. It lets us keep our apps light, ship them without
+        unnecessary trackers, and answer support emails ourselves. We would rather build
+        something that does one job well than something that tries to do everything.
+      </p>
+      <p>
+        We collect as little data as possible, and we say exactly what we collect on each
+        app's privacy page.
+      </p>
+    </div>
+  </Section>
+
+  <Section id="contact" ariaLabel="Contact">
+    <header class="section-header">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-description">
+        Support requests, privacy questions or an idea for an app — the same address reaches us.
+      </p>
+    </header>
+
+    <div class="contact-content">
+      <address class="contact-email">
+        <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+      </address>
+
+      <p class="contact-note">
+        We usually reply within 1&ndash;2 business days. For a problem with a specific app,
+        please tell us which app, your device model and Android version.
+      </p>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .section-header {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto var(--spacing-12);
+  }
+
+  .section-title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  @media (min-width: 768px) {
+    .section-title {
+      font-size: var(--font-size-4xl);
+    }
+  }
+
+  .section-description {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .bg-secondary {
+    background: var(--color-bg-secondary);
+  }
+
+  .apps-grid {
+    display: grid;
+    gap: var(--spacing-6);
+    grid-template-columns: 1fr;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 640px) {
+    .apps-grid {
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+  }
+
+  .apps-note {
+    text-align: center;
+    margin-top: var(--spacing-8);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .about-content {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .about-content p {
+    margin-bottom: var(--spacing-6);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .about-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .contact-content {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .contact-email {
+    font-style: normal;
+    display: block;
+    margin: 0 0 var(--spacing-8);
+  }
+
+  .contact-email a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3) var(--spacing-6);
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    transition: all var(--transition-fast);
+    word-break: break-all;
+  }
+
+  .contact-email a:hover {
+    background: var(--color-brand-50);
+    border-color: var(--color-brand-300);
+    color: var(--color-brand-700);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .contact-email a:hover {
+      background: var(--color-brand-900);
+      border-color: var(--color-brand-700);
+      color: var(--color-brand-300);
+    }
+  }
+
+  .contact-note {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .no-js .hero {
+    min-height: auto;
+    padding-top: var(--spacing-16);
+  }
+</style>

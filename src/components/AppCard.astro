@@ -1,0 +1,214 @@
+---
+import { privacyUrl, type AppConfig } from "@/config/apps";
+import Button from "./Button.astro";
+
+interface Props {
+  app: AppConfig;
+}
+
+const { app } = Astro.props;
+const storeUrl = app.googlePlayUrl ?? app.appStoreUrl;
+---
+
+<article class="app-card">
+  <div class="app-icon-wrapper">
+    <div class="app-icon-bg gradient-bg" aria-hidden="true"></div>
+    <img
+      src={app.icon}
+      alt=""
+      class="app-icon"
+      loading="lazy"
+      width="64"
+      height="64"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+    />
+    <div class="app-icon-fallback" aria-hidden="true">
+      <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="18,78 18,22 32,22 50,50 68,22 82,22 82,78 69,78 69,45 55,66 45,66 31,45 31,78" fill="white"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="app-content">
+    <h3 class="app-name">{app.name}</h3>
+    <p class="app-tagline">{app.tagline}</p>
+    <p class="app-description">{app.description}</p>
+
+    <div class="app-platforms" aria-label="Supported platforms">
+      {app.platforms.map(platform => (
+        <span class="platform-badge">{platform}</span>
+      ))}
+    </div>
+
+    <div class="app-links">
+      {app.googlePlayUrl && (
+        <a href={app.googlePlayUrl} class="app-link primary" target="_blank" rel="noopener noreferrer" aria-label={`${app.name} on Google Play`}>
+          <Button variant="primary" size="sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M3.6 1.9a1.5 1.5 0 0 0-.6 1.2v17.8a1.5 1.5 0 0 0 .6 1.2l.1.1 10-10v-.2l-10-10-.1-.1zm13.4 6.6L6.2 2.3l8.6 8.6 2.2-2.4zM6.2 21.7l10.8-6.2-2.2-2.3-8.6 8.5zm12.5-7.3 2.6-1.5c.8-.4.8-1.4 0-1.8l-2.6-1.5-2.5 2.4 2.5 2.4z"/>
+            </svg>
+            Google Play
+          </Button>
+        </a>
+      )}
+      {app.appStoreUrl && (
+        <a href={app.appStoreUrl} class="app-link secondary" target="_blank" rel="noopener noreferrer" aria-label={`${app.name} on the App Store`}>
+          <Button variant="ghost" size="sm">App Store</Button>
+        </a>
+      )}
+      {app.website && (
+        <a href={app.website} class="app-link secondary" target="_blank" rel="noopener noreferrer">
+          <Button variant="ghost" size="sm">Website</Button>
+        </a>
+      )}
+      <a href={privacyUrl(app)} class="app-link secondary" aria-label={`${app.name} privacy policy`}>
+        <Button variant="ghost" size="sm">Privacy Policy</Button>
+      </a>
+      {!storeUrl && <p class="app-soon">Coming soon to Google Play.</p>}
+    </div>
+  </div>
+</article>
+
+<style>
+  .app-card {
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-6);
+    transition: all var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .app-card:hover {
+    border-color: var(--color-brand-200);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+
+  @media (min-width: 768px) {
+    .app-card {
+      padding: var(--spacing-8);
+    }
+  }
+
+  .app-icon-wrapper {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    margin-bottom: var(--spacing-4);
+    flex-shrink: 0;
+  }
+
+  .app-icon-bg {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-xl);
+    z-index: 0;
+  }
+
+  .app-icon {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-xl);
+  }
+
+  .app-icon-fallback {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .app-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .app-name {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-2);
+  }
+
+  .app-tagline {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-brand-600);
+    margin-bottom: var(--spacing-3);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .app-tagline {
+      color: var(--color-brand-400);
+    }
+  }
+
+  .app-soon {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    align-self: center;
+  }
+
+  .app-description {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-4);
+    flex: 1;
+  }
+
+  .app-platforms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-6);
+  }
+
+  .platform-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-1) var(--spacing-3);
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+  }
+
+  .app-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+    margin-top: auto;
+    padding-top: var(--spacing-4);
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 640px) {
+    .app-links {
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+  }
+
+  .app-link.primary {
+    flex: 1;
+  }
+
+  .app-link.secondary {
+    flex-shrink: 0;
+  }
+</style>

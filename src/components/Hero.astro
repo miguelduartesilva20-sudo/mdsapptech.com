@@ -1,0 +1,234 @@
+---
+import Button from "./Button.astro";
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">Mobile Apps &amp; Web Pages</div>
+      <h1 id="hero-title" class="hero-title">
+        A small studio.<br />Apps built <span class="gradient-text">properly</span>.
+      </h1>
+      <p class="hero-description">
+        MDS AppTech is a very small but dedicated team. We build mobile applications and
+        simple web pages for a wide range of purposes &mdash; each one focused, light and
+        made to do its job well.
+      </p>
+      <div class="hero-actions">
+        <a href="#apps">
+          <Button variant="primary" size="lg">Our Apps</Button>
+        </a>
+        <a href="#about">
+          <Button variant="outline" size="lg">About Us</Button>
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="gradient-orb orb-1"></div>
+      <div class="gradient-orb orb-2"></div>
+      <div class="app-icon-showcase">
+        <div class="icon-bg gradient-bg"></div>
+        <svg class="icon-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="18,78 18,22 32,22 50,50 68,22 82,22 82,78 69,78 69,45 55,66 45,66 31,45 31,78" fill="white"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: var(--spacing-20) 0 var(--spacing-24);
+    min-height: calc(100vh - var(--header-height));
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -20%, var(--color-brand-50) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 100% 0%, var(--color-brand-100) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: var(--spacing-12);
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .hero-content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-content {
+      text-align: left;
+      margin: 0;
+    }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-1) var(--spacing-3);
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-6);
+  }
+
+  .hero-title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-6);
+  }
+
+  .hero-title .gradient-text {
+    display: inline;
+  }
+
+  @media (min-width: 768px) {
+    .hero-title {
+      font-size: var(--font-size-5xl);
+    }
+  }
+
+  .hero-description {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-8);
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-description {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (min-width: 640px) {
+    .hero-actions {
+      flex-direction: row;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-actions {
+      justify-content: flex-start;
+    }
+  }
+
+  .hero-visual {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 1;
+    margin: 0 auto;
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-visual {
+      display: block;
+    }
+  }
+
+  .gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    animation: float 20s ease-in-out infinite;
+  }
+
+  .orb-1 {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(135deg, var(--color-accent-start), var(--color-accent-mid));
+    top: -50px;
+    right: -50px;
+    animation-delay: 0s;
+  }
+
+  .orb-2 {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, var(--color-accent-mid), var(--color-accent-end));
+    bottom: -30px;
+    left: -30px;
+    animation-delay: -7s;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(30px, -30px) scale(1.05); }
+    50% { transform: translate(-20px, 20px) scale(0.95); }
+    75% { transform: translate(20px, 30px) scale(1.02); }
+  }
+
+  .app-icon-showcase {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 200px;
+    max-height: 200px;
+    margin: 0 auto;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+  }
+
+  .icon-bg {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-2xl);
+  }
+
+  .icon-symbol {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

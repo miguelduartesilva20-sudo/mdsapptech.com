@@ -1,0 +1,386 @@
+---
+import { siteConfig } from "@/config/site";
+import { getAppBySlug } from "@/data/apps";
+import LegalLayout from "@/layouts/LegalLayout.astro";
+
+const app = getAppBySlug("stratostream")!;
+const packageName = "com.stratostream.iptv";
+---
+
+<LegalLayout
+  title={`${app.name} Privacy Policy — ${siteConfig.name}`}
+  description={`Privacy policy for the ${app.name} Android IPTV player: what stays on your device, what the ads collect, and what we never receive.`}
+  heading="StratoStream — Privacy Policy"
+  lastUpdated={siteConfig.legal.privacyLastUpdated}
+  currentPath="/privacy/"
+>
+  <div slot="scope" class="legal-scope">
+    <p>
+      This policy applies to the <strong>StratoStream</strong> application for Android
+      phones, tablets and Android TV (package <code>{packageName}</code>), published by
+      {siteConfig.name}.
+    </p>
+    {app.googlePlayUrl && (
+      <p class="scope-store">
+        <a href={app.googlePlayUrl} target="_blank" rel="noopener noreferrer">View StratoStream on Google Play</a>
+      </p>
+    )}
+  </div>
+
+  <section>
+    <h2>In short</h2>
+    <ul>
+      <li>StratoStream has no accounts and no sign-up. We never ask who you are.</li>
+      <li>We run no servers. Your playlists, credentials, favourites and viewing history stay on your device and are never sent to us.</li>
+      <li>Your Xtream username and password are encrypted on the device with a key that cannot leave it, and are excluded from Android backups.</li>
+      <li>The app contains no analytics and no crash-reporting SDK.</li>
+      <li>The free version shows ads through Google AdMob, which does collect data — that section is below. A one-off in-app purchase removes the ads.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>1. What StratoStream is — and what it is not</h2>
+    <p>
+      StratoStream is a <strong>media player</strong>. It plays M3U and Xtream Codes playlists
+      that <em>you</em> add to it, in the same way a music player plays files you already have.
+    </p>
+    <p>Specifically:</p>
+    <ul>
+      <li>The app ships with <strong>no channels, no playlists and no media of any kind</strong> preloaded. It is empty until you add a source.</li>
+      <li>We do <strong>not sell, resell, host, stream, index or distribute</strong> any television channel, film, series or other content.</li>
+      <li>We do <strong>not sell, bundle or broker IPTV subscriptions</strong>, and we are <strong>not affiliated with, sponsored by or endorsed by</strong> any IPTV provider, channel or rights holder.</li>
+      <li>We have <strong>no relationship whatsoever with illegal or pirate IPTV services</strong>, and we do not condone the unauthorised streaming of copyrighted material.</li>
+      <li>We cannot see, and do not check, what any playlist you add contains. Nothing about your playlist reaches us.</li>
+    </ul>
+    <p>
+      You are responsible for the sources you add and for holding a lawful right to view them —
+      typically a subscription from a legitimate provider, or a publicly available free stream.
+      If you do not have a legal right to a stream, do not use StratoStream to play it.
+    </p>
+  </section>
+
+  <section>
+    <h2>2. Data we collect about you</h2>
+    <p>
+      <strong>None.</strong> {siteConfig.name} operates no server, no backend and no account
+      system for StratoStream. There is no place for your data to be sent to us, and we receive
+      no personal information from the app.
+    </p>
+    <p>
+      The only way we learn anything about you is if you email us for support, in which case we
+      have whatever you wrote to us and your email address, used only to answer you.
+    </p>
+    <p>
+      Third parties integrated into the app — Google AdMob and Google Play — do collect data for
+      their own purposes. Sections 4 and 5 describe exactly what and why.
+    </p>
+  </section>
+
+  <section>
+    <h2>3. Data stored on your device</h2>
+    <p>
+      Everything the app needs to work is kept in the app's private storage on your device,
+      readable only by StratoStream:
+    </p>
+    <div class="legal-table-wrap">
+      <table class="legal-table">
+        <thead>
+          <tr>
+            <th scope="col">What</th>
+            <th scope="col">Why it is stored</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Playlist details</th>
+            <td>The name and URL (or file) of each playlist you add, plus its EPG address and user agent, so the app can refresh it.</td>
+          </tr>
+          <tr>
+            <th scope="row">Xtream username and password</th>
+            <td>Needed to talk to your provider's portal. Stored <strong>encrypted</strong> using a key held in the Android Keystore that never leaves the device.</td>
+          </tr>
+          <tr>
+            <th scope="row">Channel list and programme guide</th>
+            <td>A local cache of what your provider returned, so browsing is instant and the guide works offline. Rebuilt from your provider on refresh.</td>
+          </tr>
+          <tr>
+            <th scope="row">Favourites, recently watched, resume position</th>
+            <td>So the app can put your channels first and pick up where you left off.</td>
+          </tr>
+          <tr>
+            <th scope="row">Programme reminders</th>
+            <td>The programmes you asked to be reminded about, and their alarm times.</td>
+          </tr>
+          <tr>
+            <th scope="row">Preferences</th>
+            <td>Theme, decoder and buffer settings, aspect ratio, guide auto-refresh, and whether the ad-free purchase is active.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      <strong>Android backup.</strong> Your preferences may be included in Android's own backup
+      to your Google account, if you have that feature switched on. The database — playlists,
+      credentials, channels and guide — is deliberately <strong>excluded</strong> from both cloud
+      backup and device-to-device transfer, so your subscription credentials never travel off the
+      device.
+    </p>
+    <div class="legal-callout">
+      <p>
+        <strong>We never see any of the above.</strong> It is not uploaded, synchronised or
+        shared. Uninstalling the app, or clearing its storage, removes all of it permanently.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Advertising (free version)</h2>
+    <p>
+      The free version of StratoStream shows ads supplied by <strong>Google AdMob</strong>.
+      To do that, Google's advertising SDK collects information from your device, which may
+      include:
+    </p>
+    <ul>
+      <li>your <strong>advertising ID</strong> (a resettable identifier Android provides for advertising) and other device identifiers;</li>
+      <li>your <strong>IP address</strong>, from which an approximate location (typically country or city level) is derived;</li>
+      <li>device and app information — model, operating system version, language, and the name and version of this app;</li>
+      <li>ad interactions — which ads were shown, viewed or tapped.</li>
+    </ul>
+    <p>
+      This data goes to Google, not to us. We receive only anonymous, aggregated reporting:
+      how many ads were shown and what they earned. We cannot identify any individual user
+      from it. See
+      <a href="https://business.safety.google/privacy/" target="_blank" rel="noopener noreferrer">Google's privacy and terms for business</a>
+      and
+      <a href="https://support.google.com/admob/answer/9012903" target="_blank" rel="noopener noreferrer">how AdMob handles data</a>.
+    </p>
+
+    <h3>Your choice about personalised ads</h3>
+    <p>
+      In the European Economic Area, the United Kingdom and Switzerland, StratoStream shows
+      Google's consent form (the User Messaging Platform) the first time you open it. Your
+      answer decides whether ads are personalised and which advertising partners may process
+      your data. You can change it at any time from
+      <strong>Settings → Privacy &amp; ad settings</strong> inside the app.
+    </p>
+    <p>You can also, on any device:</p>
+    <ul>
+      <li>reset or delete your advertising ID in <strong>Android Settings → Privacy → Ads</strong>;</li>
+      <li>turn off ad personalisation entirely in the same place;</li>
+      <li>remove ads from StratoStream altogether with the one-off purchase described below.</li>
+    </ul>
+    <p>
+      Turning off personalisation does not remove ads; it makes them less relevant.
+    </p>
+  </section>
+
+  <section>
+    <h2>5. Purchases</h2>
+    <p>
+      StratoStream offers a single, one-off in-app purchase that permanently removes the ads.
+      It is processed entirely by <strong>Google Play Billing</strong>.
+    </p>
+    <p>
+      We never see, handle or store your card number, billing address or any other payment
+      detail. Google tells the app only whether a valid purchase exists for your Google account,
+      and the app records that answer locally to keep the ads off. Payment data is handled by
+      Google under the
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>.
+    </p>
+    <p>
+      Because the purchase is tied to your Google account, it is restored automatically when you
+      reinstall the app or sign in on another device.
+    </p>
+  </section>
+
+  <section>
+    <h2>6. Connections the app makes</h2>
+    <p>StratoStream connects to exactly four kinds of destination, and no others:</p>
+    <ul>
+      <li>
+        <strong>Your IPTV provider.</strong> Playlist, guide and video requests go straight from
+        your device to the server whose address you entered. That provider therefore sees your IP
+        address, your credentials and what you watch, under <em>their</em> privacy policy — not ours.
+        We are not involved in, and cannot see, that connection.
+      </li>
+      <li>
+        <strong>Channel logo images.</strong> Loaded from whatever URLs your playlist specifies,
+        which are usually hosted by your provider or a third party. Those hosts see your IP address.
+      </li>
+      <li>
+        <strong>Google's advertising and consent services</strong>, as described in section 4
+        (free version only).
+      </li>
+      <li>
+        <strong>Google Play</strong>, to check the ad-free purchase.
+      </li>
+    </ul>
+    <p>
+      There is no StratoStream server. Nothing is proxied, mirrored or relayed through us.
+    </p>
+  </section>
+
+  <section>
+    <h2>7. Permissions the app requests</h2>
+    <div class="legal-table-wrap">
+      <table class="legal-table">
+        <thead>
+          <tr>
+            <th scope="col">Permission</th>
+            <th scope="col">What it is for</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><code>INTERNET</code></th>
+            <td>To fetch your playlist and guide, and to play streams.</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>ACCESS_NETWORK_STATE</code></th>
+            <td>To detect whether you are online before a refresh or a retry.</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>WAKE_LOCK</code></th>
+            <td>To keep the screen and CPU awake while a stream is playing.</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>POST_NOTIFICATIONS</code></th>
+            <td>To show the programme reminders you set. Optional — decline it and the rest of the app works normally.</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>RECEIVE_BOOT_COMPLETED</code></th>
+            <td>To re-arm your reminders after the device restarts, since Android clears alarms on reboot.</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>BILLING</code></th>
+            <td>To offer and restore the ad-free purchase.</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>AD_ID</code></th>
+            <td>Required by Google Play services on Android 13+ for the advertising ID used by ads.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      StratoStream requests <strong>no</strong> access to your location, camera, microphone,
+      contacts, calendar, call logs, SMS or photo library.
+    </p>
+  </section>
+
+  <section>
+    <h2>8. Analytics and crash reporting</h2>
+    <p>
+      There are none. StratoStream contains no Google Analytics, no Firebase Analytics, no
+      Crashlytics and no third-party analytics or attribution SDK of any kind. We do not know
+      how many times you opened the app, which channel you watched, or that a crash happened,
+      unless you tell us yourself.
+    </p>
+    <p>
+      Google Play may show us its own anonymous, aggregated statistics — installs by country,
+      and crash reports that Android users choose to send to Google. Those come from Google Play
+      itself, not from anything inside the app, and identify no one.
+    </p>
+  </section>
+
+  <section>
+    <h2>9. Children</h2>
+    <p>
+      StratoStream is a general-audience media player and is not directed at children under 13.
+      We do not knowingly collect personal information from children. The app is not part of
+      Google Play's Designed for Families programme, and the content shown in it comes entirely
+      from playlists supplied by the user, which we cannot rate or filter.
+    </p>
+  </section>
+
+  <section>
+    <h2>10. Retention and deletion</h2>
+    <p>
+      We hold nothing, so we have nothing to delete. Everything the app stores lives on your
+      device for as long as you keep it there. To erase all of it:
+    </p>
+    <ul>
+      <li>delete individual playlists from within the app; or</li>
+      <li>go to <strong>Android Settings → Apps → StratoStream → Storage → Clear storage</strong>; or</li>
+      <li>uninstall the app, which removes its storage entirely.</li>
+    </ul>
+    <p>
+      To remove data held by Google in connection with ads, use the Android advertising controls
+      described in section 4, and
+      <a href="https://myaccount.google.com/data-and-privacy" target="_blank" rel="noopener noreferrer">Google's own data and privacy controls</a>.
+      To ask about data held by your IPTV provider, contact that provider.
+    </p>
+  </section>
+
+  <section>
+    <h2>11. Your rights</h2>
+    <p>
+      Data protection law — including the GDPR in the EU and UK, and the CCPA/CPRA in
+      California — gives you rights of access, correction, deletion, portability and objection
+      over personal data held about you.
+    </p>
+    <p>
+      Since we hold no personal data about you, there is nothing for us to disclose, correct,
+      port or erase, and we have never sold or shared personal information — we have none to sell.
+      Where the advertising in the free version does involve processing of your data, Google acts
+      as the controller or processor for it and you can exercise those rights through the Google
+      controls linked above, or by withdrawing consent in
+      <strong>Settings → Privacy &amp; ad settings</strong>.
+    </p>
+    <p>
+      If you believe something in this policy is inaccurate, or you want to raise a concern,
+      email us at <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>. You also have
+      the right to complain to your national data protection authority.
+    </p>
+  </section>
+
+  <section>
+    <h2>12. Security</h2>
+    <p>
+      App data is stored in Android's private per-app storage. Portal credentials are additionally
+      encrypted with AES-GCM using a key generated in, and confined to, the Android Keystore, and
+      the database holding them is excluded from backup and device transfer.
+    </p>
+    <p>
+      StratoStream can play streams over plain <code>http</code>, because a great many IPTV portals
+      still only offer that. Traffic to such a server — including the credentials in the URL — is
+      not encrypted in transit. That is a property of the provider's server, not of the app;
+      prefer an <code>https</code> portal where your provider offers one.
+    </p>
+  </section>
+
+  <section>
+    <h2>13. Changes to this policy</h2>
+    <p>
+      If the app changes in a way that affects this policy, we update this page and the
+      <strong>Last updated</strong> date at the top. Significant changes will also be noted in the
+      app's Google Play release notes. This page is the current version at all times.
+    </p>
+  </section>
+
+  <section>
+    <h2>14. Contact</h2>
+    <p>
+      Questions about this policy, about StratoStream, or a privacy request:
+    </p>
+    <address>
+      <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+    </address>
+    <p class="contact-after">
+      {siteConfig.name} — <a href={siteConfig.url}>mdsapptech.com</a>
+    </p>
+  </section>
+</LegalLayout>
+
+<style>
+  .scope-store {
+    margin-top: var(--spacing-3);
+    margin-bottom: 0;
+  }
+
+  .contact-after {
+    margin-top: var(--spacing-6);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+</style>

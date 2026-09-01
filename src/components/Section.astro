@@ -1,0 +1,38 @@
+---
+interface Props {
+  id?: string;
+  class?: string;
+  ariaLabel?: string;
+}
+
+const { id, class: className = "", ariaLabel } = Astro.props;
+---
+
+<section
+  id={id}
+  class={["section", className].join(" ")}
+  aria-label={ariaLabel}
+  role={ariaLabel ? "region" : undefined}
+>
+  <div class="container">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    padding: var(--spacing-16) 0;
+  }
+
+  @media (min-width: 768px) {
+    .section {
+      padding: var(--spacing-20) 0;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section {
+      padding: var(--spacing-24) 0;
+    }
+  }
+</style>
