@@ -17,6 +17,11 @@
   --color-accent-start: #5549e8;
   --color-accent-mid: #3475df;
   --color-accent-end: #18b8d2;
+  /* The gradient's cyan end is 2.38:1 on white - under the 3:1 AA floor for
+     large text, and thin strokes like the tail of a "y" visually dissolve
+     into the page. Text gets a deeper end (3.66:1); fills keep the vivid
+     cyan, since they sit on colour rather than on white. */
+  --color-accent-text-end: #1592ab;
 
   /* Slightly blue-tinted neutrals: a pure grey next to the brand gradient
      reads as dirty, and the tint is what keeps the page feeling considered. */
@@ -135,6 +140,7 @@
     --color-border-strong: #333c50;
     --color-header-bg: rgb(13 17 26 / 0.72);
     --color-hairline: rgb(255 255 255 / 0.07);
+    --color-accent-text-end: #22c8e0;
 
     --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
     --shadow-md: 0 2px 4px rgb(0 0 0 / 0.3), 0 6px 16px -4px rgb(0 0 0 / 0.45);
@@ -283,7 +289,7 @@ p {
 }
 
 .gradient-text {
-  background: linear-gradient(115deg, var(--color-accent-start), var(--color-accent-mid) 55%, var(--color-accent-end));
+  background: linear-gradient(115deg, var(--color-accent-start), var(--color-accent-mid) 52%, var(--color-accent-text-end));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
