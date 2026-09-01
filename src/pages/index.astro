@@ -2,96 +2,117 @@
 import { siteConfig } from "@/config/site";
 import { getAllApps } from "@/data/apps";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { Hero, Section, AppCard } from "@/components";
+import { Hero, Section, AppCard, Button } from "@/components";
 
 const apps = getAllApps();
+
+const craft = [
+  {
+    title: "Mobile applications",
+    body: "Android apps built native and kept light — media players, everyday utilities, tools that do one job and start instantly.",
+  },
+  {
+    title: "Simple web pages",
+    body: "Landing pages, small business sites and app companion pages. Static where static will do, so they load fast and stay cheap to run.",
+  },
+  {
+    title: "Privacy by default",
+    body: "No analytics SDKs, no trackers we do not need. Whatever an app does collect is written out in plain language on its policy page.",
+  },
+];
 ---
 
 <BaseLayout title={siteConfig.title} description={siteConfig.description} currentPath="/">
   <Hero />
 
   <Section id="apps" ariaLabel="Our applications">
-    <header class="section-header">
-      <h2 class="section-title">Our Apps</h2>
-      <p class="section-description">
-        Every app we publish is listed here, together with its own privacy policy —
-        the one you will find linked from its Google Play or App Store listing.
-      </p>
-    </header>
+    <div class="apps-layout">
+      <header class="apps-intro">
+        <p class="eyebrow">Our apps</p>
+        <h2 class="section-title">Published, and documented</h2>
+        <p class="section-description">
+          Every app we publish is listed here with its own privacy policy — the same
+          page linked from its Google Play or App Store listing.
+        </p>
+        <p class="apps-note">More applications are on the way, each with its own policy page.</p>
+      </header>
 
-    <div class="apps-grid" role="list">
-      {apps.map((app) => (
-        <AppCard app={app} />
-      ))}
+      <div class="apps-grid" role="list">
+        {apps.map((app) => (
+          <AppCard app={app} />
+        ))}
+      </div>
     </div>
-
-    <p class="apps-note">
-      More applications are on the way. Each new app is added here with its own policy page.
-    </p>
   </Section>
 
-  <Section id="about" ariaLabel="About us" class="bg-secondary">
-    <header class="section-header">
-      <h2 class="section-title">About Us</h2>
-    </header>
+  <Section id="about" ariaLabel="About us" tone="muted">
+    <div class="about-layout">
+      <header class="about-intro">
+        <p class="eyebrow">About us</p>
+        <h2 class="section-title">A very small team, on purpose</h2>
+        <p class="section-description">
+          MDS AppTech is a small but dedicated group of app creators. Being small is
+          deliberate: it keeps the apps light, keeps unnecessary trackers out of them,
+          and means the person answering your support email is the one who wrote the code.
+        </p>
+        <p class="section-description">
+          We would rather build something that does one job well than something that
+          tries to do everything.
+        </p>
+      </header>
 
-    <div class="about-content">
-      <p>
-        MDS AppTech is a very small but dedicated team of app creators. We build mobile
-        applications and simple web pages for many different purposes — from media players
-        and everyday utilities to landing pages and small business sites.
-      </p>
-      <p>
-        Being small is deliberate. It lets us keep our apps light, ship them without
-        unnecessary trackers, and answer support emails ourselves. We would rather build
-        something that does one job well than something that tries to do everything.
-      </p>
-      <p>
-        We collect as little data as possible, and we say exactly what we collect on each
-        app's privacy page.
-      </p>
+      <ul class="craft-list">
+        {craft.map((item) => (
+          <li class="craft-item">
+            <h3 class="craft-title">{item.title}</h3>
+            <p class="craft-body">{item.body}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   </Section>
 
   <Section id="contact" ariaLabel="Contact">
-    <header class="section-header">
-      <h2 class="section-title">Contact</h2>
-      <p class="section-description">
-        Support requests, privacy questions or an idea for an app — the same address reaches us.
-      </p>
-    </header>
+    <div class="contact-card">
+      <div class="contact-copy">
+        <p class="eyebrow">Contact</p>
+        <h2 class="section-title">Talk to us directly</h2>
+        <p class="section-description">
+          Support requests, privacy questions or an idea for an app — the same address
+          reaches us, and we usually reply within one or two business days.
+        </p>
+        <p class="contact-hint">
+          Reporting a problem with an app? Tell us which app, your device model and your
+          Android version, and we can usually work it out on the first reply.
+        </p>
+      </div>
 
-    <div class="contact-content">
-      <address class="contact-email">
-        <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
-      </address>
-
-      <p class="contact-note">
-        We usually reply within 1&ndash;2 business days. For a problem with a specific app,
-        please tell us which app, your device model and Android version.
-      </p>
+      <div class="contact-action">
+        <Button href={`mailto:${siteConfig.email}`} variant="primary" size="lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="m2 7 10 6 10-6"/>
+          </svg>
+          Email us
+        </Button>
+        <address class="contact-email">{siteConfig.email}</address>
+      </div>
     </div>
   </Section>
 </BaseLayout>
 
 <style>
   .section-header {
-    text-align: center;
-    max-width: 720px;
-    margin: 0 auto var(--spacing-12);
+    max-width: 680px;
+    margin-bottom: var(--spacing-12);
   }
 
   .section-title {
-    font-size: var(--font-size-3xl);
+    font-size: clamp(1.875rem, 3.4vw, 2.5rem);
     font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-display);
     color: var(--color-text-primary);
     margin-bottom: var(--spacing-4);
-  }
-
-  @media (min-width: 768px) {
-    .section-title {
-      font-size: var(--font-size-4xl);
-    }
   }
 
   .section-description {
@@ -100,96 +121,139 @@ const apps = getAllApps();
     line-height: var(--line-height-relaxed);
   }
 
-  .bg-secondary {
-    background: var(--color-bg-secondary);
+  .section-description + .section-description {
+    margin-top: var(--spacing-4);
+  }
+
+  /* Heading on the left, cards on the right. With a single app a full-width
+     grid leaves the row looking like a card is missing; this reads as a
+     deliberate editorial column and still stacks on narrow screens. */
+  .apps-layout {
+    display: grid;
+    gap: var(--spacing-10);
+    align-items: start;
+  }
+
+  @media (min-width: 960px) {
+    .apps-layout {
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: var(--spacing-16);
+    }
+  }
+
+  .apps-intro {
+    max-width: 34em;
   }
 
   .apps-grid {
     display: grid;
     gap: var(--spacing-6);
     grid-template-columns: 1fr;
-    max-width: 1000px;
-    margin: 0 auto;
   }
 
-  @media (min-width: 640px) {
+  @media (min-width: 1200px) {
     .apps-grid {
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
   }
 
   .apps-note {
-    text-align: center;
-    margin-top: var(--spacing-8);
+    margin-top: var(--spacing-6);
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
   }
 
-  .about-content {
-    max-width: 720px;
-    margin: 0 auto;
-    text-align: center;
+  .about-layout {
+    display: grid;
+    gap: var(--spacing-12);
+    align-items: start;
   }
 
-  .about-content p {
-    margin-bottom: var(--spacing-6);
-    font-size: var(--font-size-lg);
+  @media (min-width: 900px) {
+    .about-layout {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-16);
+    }
+  }
+
+  .about-intro {
+    max-width: 34em;
+  }
+
+  .craft-list {
+    list-style: none;
+    display: grid;
+    gap: var(--spacing-6);
+  }
+
+  .craft-item {
+    padding-left: var(--spacing-5);
+    border-left: 2px solid var(--color-border-strong);
+  }
+
+  .craft-title {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-2);
+  }
+
+  .craft-body {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
     line-height: var(--line-height-relaxed);
   }
 
-  .about-content p:last-child {
-    margin-bottom: 0;
+  .contact-card {
+    display: grid;
+    gap: var(--spacing-8);
+    align-items: center;
+    padding: var(--spacing-8);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-3xl);
+    background:
+      radial-gradient(80% 120% at 100% 0%, rgb(85 73 232 / 0.07), transparent 60%),
+      var(--color-bg-elevated);
+    box-shadow: var(--shadow-md);
   }
 
-  .contact-content {
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
+  @media (min-width: 900px) {
+    .contact-card {
+      grid-template-columns: 1.4fr 0.6fr;
+      padding: var(--spacing-12);
+      gap: var(--spacing-12);
+    }
+  }
+
+  .contact-copy .section-title {
+    margin-bottom: var(--spacing-3);
+  }
+
+  .contact-hint {
+    margin-top: var(--spacing-4);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .contact-action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-4);
+  }
+
+  @media (min-width: 900px) {
+    .contact-action {
+      align-items: flex-end;
+      text-align: right;
+    }
   }
 
   .contact-email {
     font-style: normal;
-    display: block;
-    margin: 0 0 var(--spacing-8);
-  }
-
-  .contact-email a {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-2);
-    padding: var(--spacing-3) var(--spacing-6);
-    background: var(--color-bg-tertiary);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-xl);
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-text-primary);
-    transition: all var(--transition-fast);
-    word-break: break-all;
-  }
-
-  .contact-email a:hover {
-    background: var(--color-brand-50);
-    border-color: var(--color-brand-300);
-    color: var(--color-brand-700);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .contact-email a:hover {
-      background: var(--color-brand-900);
-      border-color: var(--color-brand-700);
-      color: var(--color-brand-300);
-    }
-  }
-
-  .contact-note {
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
-    line-height: var(--line-height-relaxed);
-  }
-
-  .no-js .hero {
-    min-height: auto;
-    padding-top: var(--spacing-16);
+    word-break: break-word;
   }
 </style>

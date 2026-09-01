@@ -4,32 +4,43 @@ import Logo from "./Logo.astro";
 ---
 
 <section class="hero" aria-labelledby="hero-title">
+  <div class="hero-glow" aria-hidden="true"></div>
+
   <div class="container">
     <div class="hero-content">
-      <div class="hero-badge">Mobile Apps &amp; Web Pages</div>
+      <p class="hero-badge">
+        <span class="badge-dot" aria-hidden="true"></span>
+        Mobile apps &amp; web pages
+      </p>
+
       <h1 id="hero-title" class="hero-title">
         A small studio.<br />Apps built <span class="gradient-text">properly</span>.
       </h1>
+
       <p class="hero-description">
         MDS AppTech is a very small but dedicated team. We build mobile applications and
         simple web pages for a wide range of purposes &mdash; each one focused, light and
         made to do its job well.
       </p>
+
       <div class="hero-actions">
-        <a href="#apps">
-          <Button variant="primary" size="lg">Our Apps</Button>
-        </a>
-        <a href="#about">
-          <Button variant="outline" size="lg">About Us</Button>
-        </a>
+        <Button href="#apps" variant="primary" size="lg">Our apps</Button>
+        <Button href="#about" variant="outline" size="lg">About us</Button>
       </div>
+
+      <p class="hero-note">
+        No trackers we do not need. Every app's privacy policy is
+        <a href="/privacy/">published here</a>.
+      </p>
     </div>
+
     <div class="hero-visual" aria-hidden="true">
-      <div class="gradient-orb orb-1"></div>
-      <div class="gradient-orb orb-2"></div>
-      <div class="app-icon-showcase">
-        <div class="icon-bg gradient-bg"></div>
-        <Logo class="icon-symbol" size={200} variant="full" label="MDS" tone="white" />
+      <div class="mark-halo"></div>
+      <div class="mark">
+        <!-- Wrapper, not the component itself: scoped styles from this file
+             do not cross into Logo.astro. -->
+        <div class="mark-ring"><Logo size={340} variant="full" label={null} /></div>
+        <span class="mark-word">MDS</span>
       </div>
     </div>
   </div>
@@ -37,24 +48,26 @@ import Logo from "./Logo.astro";
 
 <style>
   .hero {
-    padding: var(--spacing-20) 0 var(--spacing-24);
-    min-height: calc(100vh - var(--header-height));
-    display: flex;
-    align-items: center;
     position: relative;
+    padding: var(--spacing-20) 0 var(--spacing-24);
     overflow: hidden;
   }
 
-  .hero::before {
-    content: "";
+  @media (min-width: 1024px) {
+    .hero {
+      padding: var(--spacing-24) 0 var(--spacing-20);
+    }
+  }
+
+  /* One soft wash instead of the pair of drifting blobs that used to sit
+     here - those read as decoration, this reads as light. */
+  .hero-glow {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: -30% -10% auto -10%;
+    height: 120%;
     background:
-      radial-gradient(ellipse 80% 50% at 50% -20%, var(--color-brand-50) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 40% at 100% 0%, var(--color-brand-100) 0%, transparent 60%);
+      radial-gradient(60% 55% at 72% 22%, rgb(85 73 232 / 0.14) 0%, transparent 62%),
+      radial-gradient(45% 45% at 88% 58%, rgb(24 184 210 / 0.12) 0%, transparent 65%);
     pointer-events: none;
     z-index: 0;
   }
@@ -63,19 +76,20 @@ import Logo from "./Logo.astro";
     position: relative;
     z-index: 1;
     display: grid;
-    gap: var(--spacing-12);
+    gap: var(--spacing-16);
     align-items: center;
   }
 
   @media (min-width: 1024px) {
     .container {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: var(--spacing-12);
     }
   }
 
   .hero-content {
     text-align: center;
-    max-width: 600px;
+    max-width: 620px;
     margin: 0 auto;
   }
 
@@ -90,32 +104,31 @@ import Logo from "./Logo.astro";
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-2);
-    padding: var(--spacing-1) var(--spacing-3);
-    background: var(--color-bg-tertiary);
+    padding: 0.4rem 0.9rem 0.4rem 0.6rem;
+    background: var(--color-bg-primary);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-full);
+    box-shadow: var(--shadow-sm);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
     color: var(--color-text-secondary);
     margin-bottom: var(--spacing-6);
   }
 
+  .badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--color-accent-start), var(--color-accent-end));
+    box-shadow: 0 0 0 3px rgb(85 73 232 / 0.12);
+  }
+
   .hero-title {
-    font-size: var(--font-size-4xl);
+    font-size: clamp(2.5rem, 6.2vw, 4.25rem);
     font-weight: var(--font-weight-bold);
-    line-height: var(--line-height-tight);
-    color: var(--color-text-primary);
+    letter-spacing: var(--tracking-display);
+    line-height: 1.04;
     margin-bottom: var(--spacing-6);
-  }
-
-  .hero-title .gradient-text {
-    display: inline;
-  }
-
-  @media (min-width: 768px) {
-    .hero-title {
-      font-size: var(--font-size-5xl);
-    }
   }
 
   .hero-description {
@@ -123,30 +136,20 @@ import Logo from "./Logo.astro";
     color: var(--color-text-secondary);
     line-height: var(--line-height-relaxed);
     margin-bottom: var(--spacing-8);
-    max-width: 540px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 32em;
   }
 
   @media (min-width: 1024px) {
     .hero-description {
       margin-left: 0;
-      margin-right: 0;
     }
   }
 
   .hero-actions {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: var(--spacing-4);
     justify-content: center;
-    align-items: center;
-  }
-
-  @media (min-width: 640px) {
-    .hero-actions {
-      flex-direction: row;
-    }
   }
 
   @media (min-width: 1024px) {
@@ -155,79 +158,73 @@ import Logo from "./Logo.astro";
     }
   }
 
+  .hero-note {
+    margin-top: var(--spacing-6);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .hero-note a {
+    color: var(--color-brand-600);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  /* Visual */
   .hero-visual {
     position: relative;
-    width: 100%;
-    max-width: 400px;
-    aspect-ratio: 1;
-    margin: 0 auto;
     display: none;
+    place-items: center;
+    aspect-ratio: 1;
+    max-width: 460px;
+    margin: 0 auto;
   }
 
   @media (min-width: 1024px) {
     .hero-visual {
-      display: block;
+      display: grid;
     }
   }
 
-  .gradient-orb {
+  .mark-halo {
     position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.4;
-    animation: float 20s ease-in-out infinite;
+    inset: 8%;
+    border-radius: var(--radius-full);
+    background: radial-gradient(circle at 50% 50%, rgb(85 73 232 / 0.16), rgb(24 184 210 / 0.10) 55%, transparent 70%);
+    filter: blur(28px);
   }
 
-  .orb-1 {
-    width: 300px;
-    height: 300px;
-    background: linear-gradient(135deg, var(--color-accent-start), var(--color-accent-mid));
-    top: -50px;
-    right: -50px;
-    animation-delay: 0s;
-  }
-
-  .orb-2 {
-    width: 200px;
-    height: 200px;
-    background: linear-gradient(135deg, var(--color-accent-mid), var(--color-accent-end));
-    bottom: -30px;
-    left: -30px;
-    animation-delay: -7s;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    25% { transform: translate(30px, -30px) scale(1.05); }
-    50% { transform: translate(-20px, 20px) scale(0.95); }
-    75% { transform: translate(20px, 30px) scale(1.02); }
-  }
-
-  .app-icon-showcase {
+  .mark {
     position: relative;
-    width: 100%;
-    height: 100%;
-    max-width: 200px;
-    max-height: 200px;
-    margin: 0 auto;
-    border-radius: var(--radius-2xl);
-    overflow: hidden;
-    box-shadow: var(--shadow-xl);
+    display: grid;
+    place-items: center;
   }
 
-  .icon-bg {
+  /* Only the ring turns; the wordmark is a separate element on top so it
+     stays upright. */
+  .mark-ring {
+    animation: orbit 90s linear infinite;
+  }
+
+  .mark-word {
     position: absolute;
-    inset: 0;
-    border-radius: var(--radius-2xl);
+    font-size: 2.75rem;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.06em;
+    background: linear-gradient(115deg, var(--color-accent-start), var(--color-accent-mid) 55%, var(--color-accent-end));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
   }
 
-  .icon-symbol {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  @keyframes orbit {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mark-ring { animation: none; }
   }
 </style>

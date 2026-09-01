@@ -1,4 +1,11 @@
 ---
+/**
+ * Button / call-to-action link.
+ *
+ * The styles are real CSS. An earlier version emitted Tailwind utility class
+ * names into a project that has never had Tailwind installed, so every button
+ * on the site rendered as bare text.
+ */
 interface Props {
   href?: string;
   variant?: "primary" | "secondary" | "outline" | "ghost";
@@ -20,67 +27,155 @@ const {
 } = Astro.props;
 
 const isLink = !!href;
-
-const baseStyles = `
-  inline-flex items-center justify-center font-medium transition-all duration-200 ease-out
-  rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2
-  disabled:opacity-50 disabled:cursor-not-allowed
-`;
-
-const variantStyles = {
-  primary: `
-    gradient-bg text-white shadow-md hover:shadow-lg active:scale-[0.98]
-    disabled:shadow-none
-  `,
-  secondary: `
-    bg-neutral-100 text-neutral-900 hover:bg-neutral-200 active:scale-[0.98]
-    dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700
-  `,
-  outline: `
-    border-2 border-neutral-300 text-neutral-700 hover:bg-neutral-100 active:scale-[0.98]
-    dark:border-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-800
-  `,
-  ghost: `
-    text-neutral-700 hover:bg-neutral-100 active:scale-[0.98]
-    dark:text-neutral-300 dark:hover:bg-neutral-800
-  `,
-};
-
-const sizeStyles = {
-  sm: "px-4 py-2 text-sm gap-2",
-  md: "px-6 py-3 text-base gap-2",
-  lg: "px-8 py-4 text-lg gap-3",
-};
-
-const classList = [baseStyles, variantStyles[variant], sizeStyles[size], className].join(" ");
+const classList = ["btn", `btn-${variant}`, `btn-${size}`, className].filter(Boolean).join(" ");
 ---
 
+{isLink ? (
+  <a class={classList} href={href} aria-disabled={disabled} aria-label={ariaLabel}>
+    <span class="btn-label"><slot /></span>
+  </a>
+) : (
+  <button class={classList} type={type} disabled={disabled} aria-label={ariaLabel}>
+    <span class="btn-label"><slot /></span>
+  </button>
+)}
+
 <style>
-  .btn-wrapper {
-    display: contents;
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    font-family: inherit;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    line-height: 1;
+    white-space: nowrap;
+    border-radius: var(--radius-full);
+    border: 1px solid transparent;
+    cursor: pointer;
+    user-select: none;
+    transition:
+      transform var(--transition-fast),
+      box-shadow var(--transition-normal),
+      background-color var(--transition-normal),
+      border-color var(--transition-normal),
+      color var(--transition-normal);
+  }
+
+  .btn-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+  }
+
+  .btn:active {
+    transform: translateY(0) scale(0.985);
+  }
+
+  .btn[aria-disabled="true"],
+  .btn:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  /* Sizes */
+  .btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: var(--font-size-sm);
+  }
+
+  .btn-md {
+    padding: 0.75rem 1.5rem;
+    font-size: var(--font-size-base);
+  }
+
+  .btn-lg {
+    padding: 0.95rem 2rem;
+    font-size: var(--font-size-lg);
+  }
+
+  /* Primary: the gradient, with a colour-matched shadow so it lifts in brand
+     rather than in grey. The overlay is a second gradient that fades in on
+     hover - transitioning background-image itself does not animate. */
+  .btn-primary {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    color: var(--color-white);
+    background: linear-gradient(135deg, var(--color-accent-start), var(--color-accent-mid) 55%, var(--color-accent-end));
+    box-shadow: var(--shadow-brand);
+  }
+
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #4a3ee0, #2b6bd8 55%, #12a8c4);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-brand-hover);
+  }
+
+  .btn-primary:hover::after {
+    opacity: 1;
+  }
+
+  /* Secondary: a solid surface that still reads as a button on white. */
+  .btn-secondary {
+    color: var(--color-text-primary);
+    background: var(--color-bg-tertiary);
+    border-color: var(--color-border);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-bg-secondary);
+    border-color: var(--color-border-strong);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Outline: hairline border, fills faintly with brand on hover. */
+  .btn-outline {
+    color: var(--color-text-primary);
+    background: var(--color-bg-primary);
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--color-brand-400);
+    color: var(--color-brand-700);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-ghost {
+    color: var(--color-text-secondary);
+    background: transparent;
+  }
+
+  .btn-ghost:hover {
+    background: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+  }
+
+  /* Fingers need a bigger target than a mouse pointer does. */
+  @media (pointer: coarse) {
+    .btn-sm {
+      padding: 0.7rem 1.15rem;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .btn-outline:hover {
+      color: var(--color-brand-300);
+      border-color: var(--color-brand-500);
+    }
   }
 </style>
-
-<div class="btn-wrapper">
-  {isLink ? (
-    <a
-      class={classList}
-      href={href}
-      aria-disabled={disabled}
-      aria-label={ariaLabel}
-      rel={variant === "primary" ? "noopener noreferrer" : undefined}
-    >
-      <slot />
-    </a>
-  ) : (
-    <button
-      class={classList}
-      type={type}
-      disabled={disabled}
-      aria-disabled={disabled}
-      aria-label={ariaLabel}
-    >
-      <slot />
-    </button>
-  )}
-</div>

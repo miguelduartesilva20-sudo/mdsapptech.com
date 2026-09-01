@@ -28,7 +28,7 @@ const formattedDate = new Date(lastUpdated).toLocaleDateString("en-GB", {
     </header>
   </Section>
 
-  <Section ariaLabel={`${heading} content`}>
+  <Section ariaLabel={`${heading} content`} flush>
     <article class="legal-content">
       <slot />
     </article>

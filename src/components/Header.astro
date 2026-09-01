@@ -31,9 +31,9 @@ const anchor = (id: string) => (isHome ? `#${id}` : `/#${id}`);
     </div>
 
     <div class="nav-actions">
-      <a href={anchor("apps")} class="nav-cta">
-        <Button variant="primary" size="sm">Our Apps</Button>
-      </a>
+      <span class="nav-cta">
+        <Button href={anchor("apps")} variant="primary" size="sm">Our apps</Button>
+      </span>
       <button class="mobile-menu-btn" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation menu">
         <svg class="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <line x1="3" y1="6" x2="21" y2="6"/>
@@ -54,9 +54,12 @@ const anchor = (id: string) => (isHome ? `#${id}` : `/#${id}`);
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(var(--color-bg-primary), 0.9);
-    backdrop-filter: saturate(180%) blur(12px);
-    border-bottom: 1px solid var(--color-border);
+    /* --color-bg-primary is a hex token, so the old rgba(var(--token), 0.9)
+       here parsed as nothing and the bar rendered fully transparent. */
+    background: var(--color-header-bg);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--color-hairline);
     height: var(--header-height);
   }
 
@@ -165,8 +168,8 @@ const anchor = (id: string) => (isHome ? `#${id}` : `/#${id}`);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: var(--radius-lg);
     color: var(--color-text-secondary);
     transition: all var(--transition-fast);
