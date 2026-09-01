@@ -5,7 +5,7 @@ export const siteConfig = {
     "MDS AppTech is a small, dedicated team building mobile applications and simple web pages for a wide range of purposes.",
   url: "https://mdsapptech.com",
   ogImage: "/og-image.png",
-  email: "miguel.duarte.silva20@gmail.com",
+  email: "geral@mdsapptech.com",
   developerProfiles: {
     googlePlay: null,
     appStore: null,
