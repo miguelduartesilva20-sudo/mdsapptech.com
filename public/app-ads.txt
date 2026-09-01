@@ -1,0 +1,11 @@
+# app-ads.txt — declares which ad systems are authorised to sell inventory in
+# the MDS AppTech apps. Spec: https://iabtechlab.com/ads-txt/
+#
+# Google's crawler looks for this file at the root of the developer website
+# listed on the store entry, so the Play Console listing for every app below
+# must point at mdsapptech.com.
+#
+# The publisher ID is per AdMob account, not per app: this one line authorises
+# every app published under it — currently StratoStream (com.stratostream.iptv).
+
+google.com, pub-2606558558560425, DIRECT, f08c47fec0942fa0
