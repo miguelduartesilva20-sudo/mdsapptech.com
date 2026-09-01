@@ -1,0 +1,78 @@
+---
+/**
+ * The MDS AppTech mark: a ring of particles orbiting the wordmark.
+ *
+ * Two densities, because one does not survive both ends of the size range.
+ * "full" (338 dots) is for anything 96px and up; "compact" (88 fatter dots)
+ * is what stays readable in the header and the favicon, where the fine dots
+ * of the full version collapse into grey fuzz.
+ *
+ * Geometry comes from tools/make-logo.py - edit and re-run that, do not
+ * hand-tune the circles here.
+ */
+import { DETAILED_DOTS, COMPACT_DOTS } from "./logo-dots";
+
+interface Props {
+  size?: number;
+  variant?: "full" | "compact";
+  /** Letters inside the ring. "M" is the reduction for small sizes. */
+  label?: "MDS" | "M" | null;
+  /** "gradient" for light backgrounds, "white" for the gradient tile. */
+  tone?: "gradient" | "white";
+  class?: string;
+}
+
+const {
+  size = 40,
+  variant = "compact",
+  label = "M",
+  tone = "gradient",
+  class: className = "",
+} = Astro.props;
+
+const fill = tone === "white" ? "#ffffff" : "url(#mds-ring-gradient)";
+const textFill = tone === "white" ? "#ffffff" : "var(--color-text-primary, #171717)";
+const fontSize = label === "MDS" ? 17 : 21;
+const tracking = label === "MDS" ? 1.5 : 0;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 100 100"
+  class={className}
+  role="img"
+  aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <linearGradient id="mds-ring-gradient" gradientUnits="userSpaceOnUse"
+      x1="8" y1="4" x2="92" y2="96">
+      <stop offset="0%" stop-color="var(--color-accent-start, #5549E8)"/>
+      <stop offset="50%" stop-color="var(--color-accent-mid, #3475DF)"/>
+      <stop offset="100%" stop-color="var(--color-accent-end, #18B8D2)"/>
+    </linearGradient>
+  </defs>
+
+  <g fill={fill}>
+    {variant === "full" ? (
+      <Fragment set:html={DETAILED_DOTS} />
+    ) : (
+      <Fragment set:html={COMPACT_DOTS} />
+    )}
+  </g>
+
+  {label && (
+    <text
+      x="50"
+      y="50"
+      text-anchor="middle"
+      dominant-baseline="central"
+      font-family="var(--font-sans, system-ui, sans-serif)"
+      font-size={fontSize}
+      font-weight="700"
+      letter-spacing={tracking}
+      fill={textFill}
+    >{label}</text>
+  )}
+</svg>

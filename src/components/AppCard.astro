@@ -1,6 +1,7 @@
 ---
 import { privacyUrl, type AppConfig } from "@/config/apps";
 import Button from "./Button.astro";
+import Logo from "./Logo.astro";
 
 interface Props {
   app: AppConfig;
@@ -23,9 +24,7 @@ const storeUrl = app.googlePlayUrl ?? app.appStoreUrl;
       onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
     />
     <div class="app-icon-fallback" aria-hidden="true">
-      <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="18,78 18,22 32,22 50,50 68,22 82,22 82,78 69,78 69,45 55,66 45,66 31,45 31,78" fill="white"/>
-      </svg>
+      <Logo size={40} variant="compact" label={null} tone="white" />
     </div>
   </div>
 

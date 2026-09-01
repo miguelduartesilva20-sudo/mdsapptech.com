@@ -1,5 +1,6 @@
 ---
 import Button from "./Button.astro";
+import Logo from "./Logo.astro";
 ---
 
 <section class="hero" aria-labelledby="hero-title">
@@ -28,9 +29,7 @@ import Button from "./Button.astro";
       <div class="gradient-orb orb-2"></div>
       <div class="app-icon-showcase">
         <div class="icon-bg gradient-bg"></div>
-        <svg class="icon-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="18,78 18,22 32,22 50,50 68,22 82,22 82,78 69,78 69,45 55,66 45,66 31,45 31,78" fill="white"/>
-        </svg>
+        <Logo class="icon-symbol" size={200} variant="full" label="MDS" tone="white" />
       </div>
     </div>
   </div>
