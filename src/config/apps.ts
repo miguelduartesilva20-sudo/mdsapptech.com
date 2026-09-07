@@ -17,3 +17,8 @@ export interface AppConfig {
 export function privacyUrl(app: AppConfig): string {
   return `/privacy/${app.slug}/`;
 }
+
+/** Apps with a page under /apps/ — the icon asset lives in the same folder. */
+export function appUrl(app: AppConfig): string {
+  return `/apps/${app.slug}/`;
+}

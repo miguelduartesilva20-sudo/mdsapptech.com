@@ -11,6 +11,7 @@ reachable and stable.
 | :-- | :-- |
 | `/` | Company page — what we do, the app list, contact |
 | `/privacy/` | Website privacy policy, and an index of every app policy |
+| `/apps/stratostream/` | StratoStream product page |
 | `/privacy/stratostream/` | StratoStream (IPTV player) privacy policy — Google Play |
 | `/terms/` | Website terms of service |
 
@@ -30,6 +31,9 @@ reachable and stable.
 3. Create `src/pages/privacy/<slug>.astro`, using `src/pages/privacy/stratostream.astro`
    as the model — it wraps `LegalLayout` and uses the shared `.legal-*` classes from
    `src/styles/global.css`.
+4. Optionally add a product page at `src/pages/apps/<slug>.astro` — the "Learn more"
+   button on the app card points at `/apps/<slug>/` for every app, so an app without
+   one links nowhere.
 
 The home page, the footer and `/privacy/` pick the app up automatically, and the
 sitemap includes the new page on the next build.
