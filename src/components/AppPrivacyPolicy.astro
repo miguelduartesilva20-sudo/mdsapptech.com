@@ -1,0 +1,349 @@
+---
+/**
+ * Privacy policy for a small, offline-first app: no accounts, no servers, no
+ * analytics. The flags switch the ads, purchase and children's sections on or
+ * off so each page only states what its app actually does.
+ */
+import { siteConfig } from "@/config/site";
+import LegalLayout from "@/layouts/LegalLayout.astro";
+
+interface StoredItem {
+  what: string;
+  why: string;
+}
+
+interface Props {
+  name: string;
+  /** One phrase describing the app, e.g. "a quiz game". */
+  kind: string;
+  platforms: string[];
+  packageName?: string | null;
+  googlePlayUrl?: string | null;
+  lastUpdated: string;
+  /** Shows ads through Google AdMob. */
+  ads: boolean;
+  /** Offers a one-off in-app purchase through Google Play Billing. */
+  purchases: boolean;
+  /** Directed at children (Google Play Families / COPPA). */
+  forChildren: boolean;
+  stored: StoredItem[];
+}
+
+const {
+  name,
+  kind,
+  platforms,
+  packageName = null,
+  googlePlayUrl = null,
+  lastUpdated,
+  ads,
+  purchases,
+  forChildren,
+  stored,
+} = Astro.props;
+
+const permissions = [
+  ...(ads || purchases
+    ? [
+        { name: "INTERNET", why: "To load ads and to reach Google Play. The app's own features work without a connection." },
+        { name: "ACCESS_NETWORK_STATE", why: "To check whether you are online before requesting an ad." },
+      ]
+    : []),
+  ...(ads ? [{ name: "AD_ID", why: "Required by Google Play services on Android 13+ for the advertising ID used by ads." }] : []),
+  ...(purchases ? [{ name: "BILLING", why: "To offer and restore the in-app purchase." }] : []),
+];
+
+let n = 0;
+const next = () => ++n;
+---
+
+<LegalLayout
+  title={`${name} Privacy Policy — ${siteConfig.name}`}
+  description={`Privacy policy for ${name}: what stays on your device, what third parties collect, and what we never receive.`}
+  heading={`${name} — Privacy Policy`}
+  lastUpdated={lastUpdated}
+  currentPath="/privacy/"
+>
+  <div slot="scope" class="legal-scope">
+    <p>
+      This policy applies to <strong>{name}</strong>, {kind} for {platforms.join(" and ")}
+      {packageName && <> (package <code>{packageName}</code>)</>}, published by {siteConfig.name}.
+    </p>
+    {googlePlayUrl && (
+      <p class="scope-store">
+        <a href={googlePlayUrl} target="_blank" rel="noopener noreferrer">
+          View {name} on Google Play
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 17 17 7M9 7h8v8"/>
+          </svg>
+        </a>
+      </p>
+    )}
+  </div>
+
+  <section class="legal-summary">
+    <h2>In short</h2>
+    <ul>
+      <li>{name} has no accounts and no sign-up. We never ask who you are.</li>
+      <li>We run no servers. Your progress and settings stay on your device and are never sent to us.</li>
+      <li>The app contains no analytics and no crash-reporting SDK.</li>
+      {ads && !forChildren && (
+        <li>The app shows ads through Google AdMob, which does collect data — that section is below.{purchases && " A one-off in-app purchase removes the ads."}</li>
+      )}
+      {ads && forChildren && (
+        <li>The app shows only non-personalised, family-safe ads from Google AdMob. No advertising ID is used to profile anyone.</li>
+      )}
+      {!ads && <li>The app shows no ads.</li>}
+    </ul>
+  </section>
+
+  <section>
+    <h2>{next()}. Data we collect about you</h2>
+    <p>
+      <strong>None.</strong> {siteConfig.name} operates no server, no backend and no account
+      system for {name}. There is no place for your data to be sent to us, and we receive no
+      personal information from the app.
+    </p>
+    <p>
+      The only way we learn anything about you is if you email us for support, in which case we
+      have whatever you wrote to us and your email address, used only to answer you.
+    </p>
+    {(ads || purchases) && (
+      <p>
+        Third parties integrated into the app — {[ads && "Google AdMob", purchases && "Google Play"].filter(Boolean).join(" and ")} —
+        may collect data for their own purposes, described below.
+      </p>
+    )}
+  </section>
+
+  <section>
+    <h2>{next()}. Data stored on your device</h2>
+    <p>
+      What the app needs to work is kept in its private storage on your device, readable only
+      by {name}:
+    </p>
+    <div class="legal-table-wrap">
+      <table class="legal-table">
+        <thead>
+          <tr>
+            <th scope="col">What</th>
+            <th scope="col">Why it is stored</th>
+          </tr>
+        </thead>
+        <tbody>
+          {stored.map((item) => (
+            <tr>
+              <th scope="row">{item.what}</th>
+              <td>{item.why}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="legal-callout">
+      <p>
+        <strong>We never see any of the above.</strong> It is not uploaded, synchronised or
+        shared. Uninstalling the app, or clearing its storage, removes all of it permanently.
+      </p>
+    </div>
+  </section>
+
+  {ads && !forChildren && (
+    <section>
+      <h2>{next()}. Advertising</h2>
+      <p>
+        {name} shows ads supplied by <strong>Google AdMob</strong>. To do that, Google's
+        advertising SDK collects information from your device, which may include:
+      </p>
+      <ul>
+        <li>your <strong>advertising ID</strong> (a resettable identifier Android provides for advertising) and other device identifiers;</li>
+        <li>your <strong>IP address</strong>, from which an approximate location (typically country or city level) is derived;</li>
+        <li>device and app information — model, operating system version, language, and the name and version of this app;</li>
+        <li>ad interactions — which ads were shown, viewed or tapped.</li>
+      </ul>
+      <p>
+        This data goes to Google, not to us. We receive only anonymous, aggregated reporting:
+        how many ads were shown and what they earned. See
+        <a href="https://business.safety.google/privacy/" target="_blank" rel="noopener noreferrer">Google's privacy and terms for business</a>
+        and
+        <a href="https://support.google.com/admob/answer/9012903" target="_blank" rel="noopener noreferrer">how AdMob handles data</a>.
+      </p>
+
+      <h3>Your choice about personalised ads</h3>
+      <p>
+        In the European Economic Area, the United Kingdom and Switzerland, {name} shows Google's
+        consent form (the User Messaging Platform) the first time you open it. Your answer
+        decides whether ads are personalised. You can also, on any device:
+      </p>
+      <ul>
+        <li>reset or delete your advertising ID in <strong>Android Settings → Privacy → Ads</strong>;</li>
+        <li>turn off ad personalisation entirely in the same place{purchases && <>; or</>}</li>
+        {purchases && <li>remove ads from {name} altogether with the one-off purchase described below.</li>}
+      </ul>
+    </section>
+  )}
+
+  {ads && forChildren && (
+    <section>
+      <h2>{next()}. Advertising</h2>
+      <p>
+        {name} shows ads supplied by <strong>Google AdMob</strong>, configured for
+        child-directed treatment under Google Play's Families policy. In practice that means:
+      </p>
+      <ul>
+        <li>ads are <strong>non-personalised</strong> — they are not chosen from a profile of you or your child;</li>
+        <li>the advertising ID is <strong>not</strong> used for ad targeting or profiling;</li>
+        <li>ad content is limited to Google's family-appropriate categories.</li>
+      </ul>
+      <p>
+        To show and count ads, Google still processes basic technical data — IP address, device
+        model, operating system and app version — for ad delivery, fraud prevention and
+        aggregated reporting. That data goes to Google, not to us. See
+        <a href="https://support.google.com/admob/answer/6219315" target="_blank" rel="noopener noreferrer">AdMob's child-directed treatment</a>.
+      </p>
+    </section>
+  )}
+
+  {purchases && (
+    <section>
+      <h2>{next()}. Purchases</h2>
+      <p>
+        {name} offers a one-off in-app purchase{ads && " that permanently removes the ads"}.
+        It is processed entirely by <strong>Google Play Billing</strong>.
+      </p>
+      <p>
+        We never see, handle or store your card number, billing address or any other payment
+        detail. Google tells the app only whether a valid purchase exists for your Google
+        account, and the app records that answer locally. Payment data is handled by Google
+        under the
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>.
+        {forChildren && " Purchases sit behind the parental controls of the Google Play account."}
+      </p>
+    </section>
+  )}
+
+  <section>
+    <h2>{next()}. Permissions the app requests</h2>
+    {permissions.length > 0 ? (
+      <div class="legal-table-wrap">
+        <table class="legal-table">
+          <thead>
+            <tr>
+              <th scope="col">Permission</th>
+              <th scope="col">What it is for</th>
+            </tr>
+          </thead>
+          <tbody>
+            {permissions.map((p) => (
+              <tr>
+                <th scope="row"><code>{p.name}</code></th>
+                <td>{p.why}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ) : (
+      <p>{name} requests no special permissions.</p>
+    )}
+    <p>
+      {name} requests <strong>no</strong> access to your location, camera, microphone,
+      contacts, calendar, call logs, SMS or photo library.
+    </p>
+  </section>
+
+  <section>
+    <h2>{next()}. Analytics and crash reporting</h2>
+    <p>
+      There are none. {name} contains no Google Analytics, no Firebase Analytics, no
+      Crashlytics and no third-party analytics or attribution SDK of any kind.
+    </p>
+    <p>
+      Google Play may show us its own anonymous, aggregated statistics — installs by country,
+      and crash reports that users choose to send to Google. Those come from Google Play
+      itself, not from anything inside the app, and identify no one.
+    </p>
+  </section>
+
+  <section>
+    <h2>{next()}. Children</h2>
+    {forChildren ? (
+      <>
+        <p>
+          {name} is designed to be suitable for children and complies with Google Play's
+          Families policy. We do not collect personal information from anyone, including
+          children under 13 (or the equivalent minimum age in your country). The app has no
+          chat, no user-generated content shared with others and no links to social networks.
+        </p>
+        <p>
+          Parents or guardians with any question about the app can contact us at the address
+          below.
+        </p>
+      </>
+    ) : (
+      <p>
+        {name} is a general-audience app and is not directed at children under 13. We do not
+        knowingly collect personal information from children — or from anyone else.
+      </p>
+    )}
+  </section>
+
+  <section>
+    <h2>{next()}. Retention and deletion</h2>
+    <p>
+      We hold nothing, so we have nothing to delete. Everything the app stores lives on your
+      device for as long as you keep it there. To erase all of it, go to
+      <strong>Android Settings → Apps → {name} → Storage → Clear storage</strong>, or uninstall
+      the app.
+    </p>
+  </section>
+
+  <section>
+    <h2>{next()}. Your rights</h2>
+    <p>
+      Data protection law — including the GDPR in the EU and UK, and the CCPA/CPRA in
+      California — gives you rights of access, correction, deletion, portability and objection
+      over personal data held about you. Since we hold no personal data about you, there is
+      nothing for us to disclose, correct or erase, and we have never sold or shared personal
+      information.
+      {ads && " Where ads involve processing of your data, Google is responsible for it and you can exercise those rights through Google's controls."}
+    </p>
+    <p>
+      To raise a concern, email us at <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.
+      You also have the right to complain to your national data protection authority.
+    </p>
+  </section>
+
+  <section>
+    <h2>{next()}. Changes to this policy</h2>
+    <p>
+      If the app changes in a way that affects this policy, we update this page and the
+      <strong>Last updated</strong> date at the top. This page is the current version at all
+      times.
+    </p>
+  </section>
+
+  <section>
+    <h2>{next()}. Contact</h2>
+    <p>Questions about this policy, about {name}, or a privacy request:</p>
+    <address>
+      <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+    </address>
+    <p class="contact-after">
+      {siteConfig.name} — <a href={siteConfig.url}>mdsapptech.com</a>
+    </p>
+  </section>
+</LegalLayout>
+
+<style>
+  .scope-store {
+    margin-top: var(--spacing-3);
+    margin-bottom: 0;
+  }
+
+  .contact-after {
+    margin-top: var(--spacing-6);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+</style>
