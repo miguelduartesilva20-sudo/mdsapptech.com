@@ -1,10 +1,10 @@
 ---
 import { siteConfig } from "@/config/site";
-import { getAllApps } from "@/data/apps";
+import { getPublishedApps } from "@/data/apps";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Hero, Section, AppCard, Button } from "@/components";
 
-const apps = getAllApps();
+const apps = getPublishedApps();
 
 const craft = [
   {

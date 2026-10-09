@@ -11,6 +11,8 @@ export interface AppConfig {
   platforms: string[];
   googlePlayUrl: string | null;
   appStoreUrl: string | null;
+  /** Not released yet: has a policy page, but no card on the home page. */
+  inDevelopment?: boolean;
 }
 
 /** Every app gets its own privacy policy page under /privacy/. */
