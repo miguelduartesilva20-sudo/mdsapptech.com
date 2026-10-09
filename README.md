@@ -13,7 +13,7 @@ reachable and stable.
 | `/privacy/` | Website privacy policy, and an index of every app policy (in-development apps included) |
 | `/apps/stratostream/` | StratoStream product page |
 | `/privacy/stratostream/` | StratoStream (IPTV player) privacy policy — Google Play |
-| `/privacy/Avinimo/`, `/privacy/Funinimo/`, `/privacy/QuizWhizzy/` | Policies for apps in development (built from `src/components/AppPrivacyPolicy.astro`) |
+| `/privacy/Avinimo/`, `/privacy/Funinimo/`, `/privacy/QuizWhizzy/`, `/privacy/Digrift/`, `/privacy/Lexolumi/`, `/privacy/Numivela/` | Policies for apps in development (built from `src/components/AppPrivacyPolicy.astro`) |
 | `/terms/` | Website terms of service |
 
 ## Commands

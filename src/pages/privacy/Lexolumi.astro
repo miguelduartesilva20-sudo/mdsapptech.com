@@ -1,0 +1,23 @@
+---
+import AppPrivacyPolicy from "@/components/AppPrivacyPolicy.astro";
+
+// Draft: confirm each of these against the app before linking the page from
+// the Play Console. The policy text follows these flags.
+const policy = {
+  name: "Lexolumi",
+  kind: "an app",
+  platforms: ["Android"],
+  packageName: null,
+  googlePlayUrl: null,
+  lastUpdated: "2026-10-09",
+  ads: true,
+  purchases: true,
+  forChildren: false,
+  stored: [
+    { what: "Progress", why: "What you have unlocked or completed, so you can pick up where you left off." },
+    { what: "Preferences", why: "Sound, theme and language settings." },
+  ],
+};
+---
+
+<AppPrivacyPolicy {...policy} />
