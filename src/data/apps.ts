@@ -13,6 +13,42 @@ export const apps: AppConfig[] = [
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.stratostream.iptv",
     appStoreUrl: null,
   },
+  {
+    slug: "Avinimo",
+    name: "Avinimo",
+    tagline: "In development",
+    description: "A simple Android app, currently in development.",
+    icon: "/apps/Avinimo/icon.png",
+    website: null,
+    platforms: ["Android"],
+    googlePlayUrl: null,
+    appStoreUrl: null,
+    inDevelopment: true,
+  },
+  {
+    slug: "Funinimo",
+    name: "Funinimo",
+    tagline: "In development",
+    description: "A simple Android game, currently in development.",
+    icon: "/apps/Funinimo/icon.png",
+    website: null,
+    platforms: ["Android"],
+    googlePlayUrl: null,
+    appStoreUrl: null,
+    inDevelopment: true,
+  },
+  {
+    slug: "QuizWhizzy",
+    name: "QuizWhizzy",
+    tagline: "Quiz game — in development",
+    description: "A simple Android quiz game, currently in development.",
+    icon: "/apps/QuizWhizzy/icon.png",
+    website: null,
+    platforms: ["Android"],
+    googlePlayUrl: null,
+    appStoreUrl: null,
+    inDevelopment: true,
+  },
 ];
 
 export function getAppBySlug(slug: string): AppConfig | undefined {
@@ -21,4 +57,9 @@ export function getAppBySlug(slug: string): AppConfig | undefined {
 
 export function getAllApps(): AppConfig[] {
   return apps;
+}
+
+/** Released apps — the ones that get a card on the home page. */
+export function getPublishedApps(): AppConfig[] {
+  return apps.filter((app) => !app.inDevelopment);
 }

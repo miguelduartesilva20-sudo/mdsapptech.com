@@ -10,10 +10,10 @@ reachable and stable.
 | Route | What it is |
 | :-- | :-- |
 | `/` | Company page — what we do, the app list, contact |
-| `/privacy/` | Website privacy policy, and an index of every app policy |
+| `/privacy/` | Website privacy policy, and an index of every app policy (in-development apps included) |
 | `/apps/stratostream/` | StratoStream product page |
 | `/privacy/stratostream/` | StratoStream (IPTV player) privacy policy — Google Play |
-| `/privacy/Avinimo/`, `/privacy/Funinimo/`, `/privacy/QuizWhizzy/` | Policies for apps in development (built from `src/components/AppPrivacyPolicy.astro`; not yet listed on the home page) |
+| `/privacy/Avinimo/`, `/privacy/Funinimo/`, `/privacy/QuizWhizzy/` | Policies for apps in development (built from `src/components/AppPrivacyPolicy.astro`) |
 | `/terms/` | Website terms of service |
 
 ## Commands
@@ -35,6 +35,10 @@ reachable and stable.
 4. Optionally add a product page at `src/pages/apps/<slug>.astro` — the "Learn more"
    button on the app card points at `/apps/<slug>/` for every app, so an app without
    one links nowhere.
+
+Set `inDevelopment: true` on an app that is not released yet: it gets its policy page
+and appears in `/privacy/` and the footer, but has no card on the home page until the
+flag is removed.
 
 The home page, the footer and `/privacy/` pick the app up automatically, and the
 sitemap includes the new page on the next build.

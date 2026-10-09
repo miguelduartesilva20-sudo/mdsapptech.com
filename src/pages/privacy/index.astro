@@ -29,9 +29,15 @@ const apps = getAllApps();
       {apps.map((app) => (
         <li>
           <a href={privacyUrl(app)}>{app.name} — Privacy Policy</a>
+          {app.inDevelopment && <span class="app-status"> (in development)</span>}
         </li>
       ))}
     </ul>
+    <p>
+      Apps marked <em>in development</em> are not released yet. Their policies are published
+      ahead of launch so they can be reviewed with the store listing, and will be updated if
+      the app changes before release.
+    </p>
   </section>
 
   <section>
@@ -134,3 +140,10 @@ const apps = getAllApps();
     </address>
   </section>
 </LegalLayout>
+
+<style>
+  .app-status {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+</style>
