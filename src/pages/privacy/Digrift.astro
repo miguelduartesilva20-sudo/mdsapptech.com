@@ -1,21 +1,23 @@
 ---
 import AppPrivacyPolicy from "@/components/AppPrivacyPolicy.astro";
 
-// Draft: confirm each of these against the app before linking the page from
-// the Play Console. The policy text follows these flags.
+// Confirmed with the developer on 2026-10-15: AdMob ads only (no in-app
+// purchase), audience includes children (Google Play Families), no online
+// services, and only game progress is saved. Update these flags — and
+// lastUpdated — if the app changes. Fill in packageName and googlePlayUrl once
+// the listing exists.
 const policy = {
   name: "Digrift",
-  kind: "an app",
+  kind: "a game",
   platforms: ["Android"],
   packageName: null,
   googlePlayUrl: null,
-  lastUpdated: "2026-10-09",
+  lastUpdated: "2026-10-15",
   ads: true,
-  purchases: true,
-  forChildren: false,
+  purchases: false,
+  forChildren: true,
   stored: [
-    { what: "Progress", why: "What you have unlocked or completed, so you can pick up where you left off." },
-    { what: "Preferences", why: "Sound, theme and language settings." },
+    { what: "Game progress", why: "The levels you have reached and what you have unlocked, so you can pick up where you left off." },
   ],
 };
 ---

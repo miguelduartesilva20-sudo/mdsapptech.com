@@ -42,14 +42,18 @@ const {
   stored,
 } = Astro.props;
 
+const online = [ads && "load ads", purchases && "reach Google Play"].filter(Boolean).join(" and ");
+
 const permissions = [
   ...(ads || purchases
     ? [
-        { name: "INTERNET", why: "To load ads and to reach Google Play. The app's own features work without a connection." },
+        { name: "INTERNET", why: `To ${online}. The app's own features work without a connection.` },
         { name: "ACCESS_NETWORK_STATE", why: "To check whether you are online before requesting an ad." },
       ]
     : []),
-  ...(ads ? [{ name: "AD_ID", why: "Required by Google Play services on Android 13+ for the advertising ID used by ads." }] : []),
+  // Google Play Families: an app whose audience includes children must not
+  // transmit the advertising ID, so the app removes AD_ID from its manifest.
+  ...(ads && !forChildren ? [{ name: "AD_ID", why: "Required by Google Play services on Android 13+ for the advertising ID used by ads." }] : []),
   ...(purchases ? [{ name: "BILLING", why: "To offer and restore the in-app purchase." }] : []),
 ];
 
@@ -66,8 +70,8 @@ const next = () => ++n;
 >
   <div slot="scope" class="legal-scope">
     <p>
-      This policy applies to <strong>{name}</strong>, {kind} for {platforms.join(" and ")}
-      {packageName && <> (package <code>{packageName}</code>)</>}, published by {siteConfig.name}.
+      This policy applies to <strong>{name}</strong>, {kind} for {platforms.join(" and ")}{packageName && <> (package <code>{packageName}</code>)</>},
+      published by {siteConfig.name}.
     </p>
     {googlePlayUrl && (
       <p class="scope-store">
@@ -85,13 +89,13 @@ const next = () => ++n;
     <h2>In short</h2>
     <ul>
       <li>{name} has no accounts and no sign-up. We never ask who you are.</li>
-      <li>We run no servers. Your progress and settings stay on your device and are never sent to us.</li>
+      <li>We run no servers. Everything {name} saves stays on your device and is never sent to us.</li>
       <li>The app contains no analytics and no crash-reporting SDK.</li>
       {ads && !forChildren && (
         <li>The app shows ads through Google AdMob, which does collect data — that section is below.{purchases && " A one-off in-app purchase removes the ads."}</li>
       )}
       {ads && forChildren && (
-        <li>The app shows only non-personalised, family-safe ads from Google AdMob. No advertising ID is used to profile anyone.</li>
+        <li>The app shows only non-personalised, family-safe ads from Google AdMob. It does not use the advertising ID, so no one is profiled.</li>
       )}
       {!ads && <li>The app shows no ads.</li>}
     </ul>
@@ -192,7 +196,7 @@ const next = () => ++n;
       </p>
       <ul>
         <li>ads are <strong>non-personalised</strong> — they are not chosen from a profile of you or your child;</li>
-        <li>the advertising ID is <strong>not</strong> used for ad targeting or profiling;</li>
+        <li>the app does <strong>not</strong> request or send the advertising ID, so it cannot be used for ad targeting or profiling;</li>
         <li>ad content is limited to Google's family-appropriate categories.</li>
       </ul>
       <p>

@@ -11,6 +11,8 @@ export interface AppConfig {
   platforms: string[];
   googlePlayUrl: string | null;
   appStoreUrl: string | null;
+  /** Has a product page at src/pages/apps/<slug>.astro, linked as "Learn more". */
+  productPage?: boolean;
   /** Not released yet: has a policy page, but no card on the home page. */
   inDevelopment?: boolean;
 }

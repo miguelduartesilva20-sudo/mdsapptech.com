@@ -13,7 +13,8 @@ reachable and stable.
 | `/privacy/` | Website privacy policy, and an index of every app policy (in-development apps included) |
 | `/apps/stratostream/` | StratoStream product page |
 | `/privacy/stratostream/` | StratoStream (IPTV player) privacy policy — Google Play |
-| `/privacy/Avinimo/`, `/privacy/Funinimo/`, `/privacy/QuizWhizzy/`, `/privacy/Digrift/`, `/privacy/Lexolumi/`, `/privacy/Numivela/` | Policies for apps in development (built from `src/components/AppPrivacyPolicy.astro`) |
+| `/privacy/Digrift/` | Digrift (game) privacy policy — built from `src/components/AppPrivacyPolicy.astro` |
+| `/privacy/Avinimo/`, `/privacy/Funinimo/`, `/privacy/QuizWhizzy/`, `/privacy/Lexolumi/`, `/privacy/Numivela/` | Policies for apps in development (built from `src/components/AppPrivacyPolicy.astro`) |
 | `/terms/` | Website terms of service |
 
 ## Commands
@@ -32,9 +33,8 @@ reachable and stable.
 3. Create `src/pages/privacy/<slug>.astro`, using `src/pages/privacy/stratostream.astro`
    as the model — it wraps `LegalLayout` and uses the shared `.legal-*` classes from
    `src/styles/global.css`.
-4. Optionally add a product page at `src/pages/apps/<slug>.astro` — the "Learn more"
-   button on the app card points at `/apps/<slug>/` for every app, so an app without
-   one links nowhere.
+4. Optionally add a product page at `src/pages/apps/<slug>.astro` and set
+   `productPage: true` on the app — the card shows its "Learn more" button only then.
 
 Set `inDevelopment: true` on an app that is not released yet: it gets its policy page
 and appears in `/privacy/` and the footer, but has no card on the home page until the
