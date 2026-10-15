@@ -56,9 +56,11 @@ const storeUrl = app.googlePlayUrl ?? app.appStoreUrl;
         App Store
       </Button>
     )}
-    <Button href={appUrl(app)} variant="secondary" size="sm" ariaLabel={`More about ${app.name}`}>
-      Learn more
-    </Button>
+    {app.productPage && (
+      <Button href={appUrl(app)} variant="secondary" size="sm" ariaLabel={`More about ${app.name}`}>
+        Learn more
+      </Button>
+    )}
     {app.website && (
       <Button href={app.website} variant="secondary" size="sm">Website</Button>
     )}

@@ -12,6 +12,7 @@ export const apps: AppConfig[] = [
     platforms: ["Android", "Android TV"],
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.stratostream.iptv",
     appStoreUrl: null,
+    productPage: true,
   },
   {
     slug: "Avinimo",
@@ -52,14 +53,14 @@ export const apps: AppConfig[] = [
   {
     slug: "Digrift",
     name: "Digrift",
-    tagline: "In development",
-    description: "A simple Android app, currently in development.",
+    tagline: "Family-friendly game for Android",
+    description:
+      "A game for all ages that plays fully offline. No accounts and no sign-up — your progress is saved on your device and never leaves it.",
     icon: "/apps/Digrift/icon.png",
     website: null,
     platforms: ["Android"],
     googlePlayUrl: null,
     appStoreUrl: null,
-    inDevelopment: true,
   },
   {
     slug: "Lexolumi",
